@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>الحضارة المصرية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/emoji-css/1.4.1/emoji.min.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'SF Pro Display', Arial, sans-serif;
+            direction: rtl;
+            height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+            background: url('images/day-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            transition: background 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInPage 0.5s ease-in-out;
+            font-size: 16px;
+        }
+
+        body.dark-mode {
+            background: url('images/night-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #e0e0e0;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .content {
+            flex: 1;
+            padding: 80px 10px 20px;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .top-bar.dark-mode {
+            background: rgba(34, 34, 34, 0.8);
+        }
+
+        .top-bar-text {
+            font-size: 20px;
+            color: black;
+            transition: color 0.3s;
+        }
+
+        .dark-mode .top-bar-text {
+            color: #e0e0e0;
+        }
+
+        .language-toggle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .language-toggle i {
+            font-size: 22px;
+        }
+
+        .language-toggle-text {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .language-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 1100;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .language-menu.show {
+            display: block;
+        }
+
+        .language-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+            transition: background-color 0.3s;
+        }
+
+        .language-menu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar.hidden {
+            transform: translateY(100%);
+        }
+
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+            transition: color 0.3s;
+            animation: slideIn 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .navbar i {
+            display: block;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .navbar .active {
+            color: #007bff;
+        }
+
+        .dark-mode .navbar a {
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            width: 90%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .section.dark-mode {
+            background: rgba(44, 44, 46, 0.9);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: 240px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s, background-color 0.3s, color 0.3s, visibility 0.3s, opacity 0.3s;
+            z-index: 1001;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            animation: fadeInSidebar 0.3s ease-in-out;
+        }
+
+        .sidebar.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @keyframes fadeInSidebar {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sidebar a {
+            color: black;
+            text-decoration: none;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 18px;
+            transition: color 0.3s;
+            background-color: #007bff;
+            padding: 10px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+            animation: bounceIn 0.5s ease-in-out;
+        }
+
+        .sidebar a:hover {
+            color: #0056b3;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+        }
+
+        .sidebar a i, .sidebar a img {
+            display: block;
+            font-size: 28px;
+        }
+
+        .sidebar a img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sidebar .menu-label {
+            font-size: 20px;
+            color: black;
+            margin-top: 20px;
+        }
+
+        @keyframes bounceIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-toggle-text {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .toggle-dark-mode {
+            display: block;
+            width: 60px;
+            height: 60px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 50%;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+        }
+
+        .toggle-dark-mode:hover {
+            background-color: #0056b3;
+        }
+
+        .dark-mode .navbar {
+            background: rgba(44, 44, 46, 0.8);
+        }
+
+        .dark-mode .sidebar {
+            background: rgba(34, 34, 36, 0.95);
+            color: #e0e0e0;
+        }
+
+        .dark-mode .sidebar a {
+            color: #e0e0e0;
+        }
+
+        .dark-mode .sidebar .close-btn {
+            color: #e0e0e0;
+        }
+
+        .emoji {
+            font-size: 24px;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 70px 10px 20px;
+            }
+
+            .top-bar {
+                height: 50px;
+            }
+
+            .navbar {
+                padding: 5px 0;
+            }
+
+            .navbar a {
+                font-size: 12px;
+            }
+
+            .sidebar {
+                width: 200px;
+                padding: 15px;
+            }
+
+            .sidebar a {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+
+            .menu-toggle-text {
+                font-size: 12px;
+            }
+
+            .language-menu {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false">
+    <div class="top-bar">
+        <span class="top-bar-text">الحضارة المصرية جميلة</span>
+        <div class="language-toggle" onclick="toggleLanguageMenu()">
+            <i class="fa fa-globe"></i>
+            <span class="language-toggle-text">اللغة</span>
+        </div>
+    </div>
+    <div class="language-menu" id="language-menu">
+        <a href="javascript:void(0)" onclick="changeLanguage('ar')">العربية</a>
+        <a href="javascript:void(0)" onclick="changeLanguage('en')">English</a>
+        <a href="javascript:void(0)" onclick="changeLanguage('fr')">Français</a>
+        <a href="javascript:void(0)" onclick="changeLanguage('de')">Deutsch</a>
+        <a href="javascript:void(0)" onclick="changeLanguage('es')">Español</a>
+        <a href="javascript:void(0)" onclick="changeLanguage('zh')">中文</a>
+        <a href="javascript:void(0)" onclick="changeLanguage('ja')">日本語</a>
+        <a href="javascript:void(0)" onclick="changeLanguage('ru')">Русский</a>
+        <!-- Add more languages as needed -->
+    </div>
+    <div class="content fade-in">
+        <div id="home" class="section">
+            <h1>الحضارة المصرية القديمة</h1>
+            <p>كانت مصر القديمة واحدة من أقدم الحضارات وأكثرها تأثيرًا في التاريخ البشري. ازدهرت هذه الحضارة على ضفاف نهر النيل واستمرت لآلاف السنين. كانت الحضارة المصرية معروفة بفنونها المعمارية الضخمة، وثقافتها الغنية، وإنجازاتها العلمية والطبية.</p>
+            <p>الكتابة الهيروغليفية هي نظام الكتابة الذي استخدمه المصريون القدماء. وقد ساعدت على تسجيل الأحداث الهامة والمعاملات الاقتصادية والدينية.</p>
+            <p>تشمل الحضارة المصرية العديد من الجوانب الرائعة، مثل بناء المعابد الضخمة، والاحتفالات الدينية، والفنون التي تعكس الحياة اليومية والدينية للمصريين القدماء. كانت هذه الحضارة متقدمة في مجالات الطب والفلك والزراعة والهندسة.</p>
+            <p>كانت المعتقدات الدينية تلعب دورًا هامًا في حياة المصريين القدماء، حيث كانوا يعبدون مجموعة واسعة من الآلهة والإلهات، وكانوا يعتقدون في الحياة بعد الموت والبعث. هذه المعتقدات كانت تؤثر على فنونهم ومعمارهم بشكل كبير.</p>
+        </div>
+
+        <div id="pyramids" class="section">
+            <h2>الأهرامات</h2>
+            <p>تعتبر الأهرامات المصرية من أهم الإنجازات المعمارية في تاريخ البشرية. بنيت هذه الهياكل الضخمة كمقابر للفراعنة وهي تعكس القدرة الهندسية للمصريين القدماء. أشهر هذه الأهرامات هو هرم خوفو الأكبر في الجيزة، والذي يعد أحد عجائب الدنيا السبع القديمة.</p>
+            <p>كانت الأهرامات جزءًا من مجمعات جنائزية تضم معابد ومباني إضافية لإدارة شؤون الآخرة. الأهرامات لم تكن مجرد مقابر، بل كانت أيضًا رموزًا للقوة الدينية والسياسية للفرعون.</p>
+        </div>
+
+        <div id="pharaohs" class="section">
+            <h2>الفراعنة</h2>
+            <p>حكم الفراعنة مصر القديمة وتركوا إرثًا عظيمًا من الفنون والثقافة. كانوا يعتبرون أنفسهم أبناء الآلهة ووسيطين بين الآلهة والشعب. كان للفراعنة دور ديني بارز وكانوا يشرفون على الطقوس الدينية والاحتفالات الرسمية.</p>
+            <p>الفراعنة كانوا أيضًا قادة عسكريين، وقد قادوا حملات لتوسيع حدود مصر وتأمينها. آثارهم العسكرية والمعمارية تظهر تطور مصر وقوتها في العصور القديمة.</p>
+        </div>
+
+        <div id="temples" class="section">
+            <h2>المعابد</h2>
+            <p>كانت المعابد المصرية مراكز دينية هامة ومواقع لعبادة الآلهة المصرية. تميزت المعابد بتصاميمها المعمارية الفخمة والنقوش التي تروي قصص الآلهة والملوك. من أبرز هذه المعابد معبد الكرنك ومعبد الأقصر في طيبة.</p>
+            <p>المعابد كانت تُستخدم أيضًا لأغراض اجتماعية وسياسية، حيث كانت تُجرى فيها الاحتفالات الرسمية والاجتماعات. الفن في المعابد يعكس الرمزية الدينية والأحداث التاريخية المهمة.</p>
+        </div>
+
+        <div id="additional-info" class="section">
+            <h2>حضارة مصر الجميلة</h2>
+            <p>تعتبر مصر واحدة من أقدم الحضارات في العالم، وكانت تشتهر بجمال طبيعتها وآثارها التاريخية المدهشة. النيل الذي يخترقها من الجنوب إلى الشمال كان شريان الحياة، حيث وفّر المياه اللازمة للزراعة والنقل.</p>
+            <p>الأهرامات والمعابد الفخمة تعكس مدى التطور الهندسي والفني للمصريين القدماء، وتروي قصصًا عن الحضارة التي أبهرت العالم بعلومها وفنونها وثقافتها.</p>
+            <p>سواء كنت تزور مصر اليوم أو تقرأ عن حضارتها القديمة، ستجد دائمًا شيئًا يجذبك ويثير اهتمامك عن هذا البلد الجميل وتاريخه العظيم.</p>
+        </div>
+
+        <div id="science" class="section">
+            <h2>التطور العلمي في مصر القديمة</h2>
+            <p>كانت مصر القديمة مركزًا للتطور العلمي في العديد من المجالات، بما في ذلك الطب والفلك والرياضيات والهندسة. المصريون القدماء طوروا تقنيات جراحية وطب الأسنان وقدموا إسهامات كبيرة في فهم الأمراض والعلاجات.</p>
+            <p>كان للمصريين تقاويم دقيقة تعتمد على مراقبة الشمس والنجوم، مما ساعدهم في تحديد مواعيد الزراعة والاحتفالات الدينية. في الرياضيات، استخدموا أنظمة حسابية معقدة للمساحة والهندسة الضرورية في بناء الأهرامات والمعابد.</p>
+        </div>
+
+        <div id="culture" class="section">
+            <h2>الثقافة والفنون في مصر القديمة</h2>
+            <p>الثقافة المصرية القديمة غنية بالفنون المتنوعة مثل الرسم والنحت والموسيقى. النقوش واللوحات التي زينت المعابد والمقابر تعكس الحياة اليومية والدينية للمصريين، وغالبًا ما تصور الآلهة والملوك وأحداثًا تاريخية هامة.</p>
+            <p>الفن المصري كان يركز على التعبير الرمزي والبقاء، مع الالتزام الصارم بالقواعد والأساليب التي تؤكد على الدقة والتفاصيل. الموسيقى والرقص كانت جزءًا من الطقوس الدينية والاحتفالات، حيث استخدمت الآلات الموسيقية مثل الطبول والقيثارات.</p>
+        </div>
+
+        <div id="religion" class="section">
+            <h2>الدين في مصر القديمة</h2>
+            <p>الدين كان جزءًا لا يتجزأ من حياة المصريين القدماء. كانوا يعبدون مجموعة واسعة من الآلهة والإلهات التي كانت تمثل قوى الطبيعة والحياة اليومية. الآلهة الرئيسية مثل رع وإيزيس وأوزوريس كانوا يمثلون الشمس والأمومة والبعث على التوالي.</p>
+            <p>المعتقدات الدينية كانت تشمل فكرة الحياة بعد الموت، حيث كان المصريون يؤمنون بأن الروح تواصل العيش في الآخرة. لهذا السبب، كانت المقابر والأهرامات مليئة بالكنوز والأشياء التي يحتاجها الشخص في حياته الآخرة.</p>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="javascript:void(0)" class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fa fa-bars"></i>
+            <span class="menu-toggle-text">قائمة</span>
+        </a>
+        <a href="#home" class="active"><i class="fa fa-home"></i> الرئيسية</a>
+        <a href="https://hmhamdi.github.io/hm8/" target="_blank"><i class="fa fa-envelope"></i> تواصل معنا</a>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+        <a href="#home"><i class="fa fa-home"></i></a>
+        <a href="#pharaohs"><i class="fa fa-crown"></i></a>
+        <a href="#science"><i class="fa fa-flask"></i></a>
+        <a href="#culture"><i class="fa fa-palette"></i></a>
+        <a href="#religion"><i class="fa fa-church"></i></a>
+        <a href="javascript:void(0)" class="toggle-dark-mode" onclick="toggleDarkMode()"><i class="fa fa-moon"></i></a>
+        <span class="menu-label">الاختيارات</span>
+    </div>
+
+    <script>
+        const languageMenu = document.getElementById('language-menu');
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.toggle('dark-mode');
+            });
+            document.querySelector('.top-bar').classList.toggle('dark-mode');
+        }
+
+        function setModeBasedOnTime() {
+            const now = new Date();
+            const hour = now.getHours();
+            const cairoTimeOffset = 2; // Cairo time zone offset (GMT+2)
+            const cairoHour = (hour + cairoTimeOffset) % 24;
+            const isNight = cairoHour >= 12 || cairoHour < 0;
+            if (isNight) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        function toggleLanguageMenu() {
+            languageMenu.classList.toggle('show');
+        }
+
+        function changeLanguage(lang) {
+            alert(`تغيير اللغة إلى ${lang}`); // Replace this with actual language change logic
+            toggleLanguageMenu();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setModeBasedOnTime();
+            document.body.classList.add('fade-in');
+        });
+
+        setInterval(setModeBasedOnTime, 60000);
+
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            let st = window.pageYOffset || document.documentElement.scrollTop;
+            const navbar = document.querySelector('.navbar');
+            if (st > lastScrollTop) {
+                navbar.classList.add('hidden');
+            } else {
+                navbar.classList.remove('hidden');
+            }
+            lastScrollTop = st <= 0 ? 0 : st;
+        });
+    </script>
+</body>
+</html>
